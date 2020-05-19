@@ -41,6 +41,54 @@ const izUnique = (str) => {
 console.log('izUnique "heya": ', izUnique('heya'));
 console.log('izUnique "hey you": ', izUnique('hey you'));
 
+/*
+ * Keep track of seen characters with a Set data structure, fail when
+ * a repeated character is found.
+ *
+ * Time: O(N)
+ * Additional space: O(N)
+ */
+function hasUniqueCharactersSet(str) {
+  // solution v1 from CtCI
+  let chars = new Set();
+
+  for (let i = 0; i < str.length; ++i) {
+    if (chars.has(str[i])) {
+      return false;
+    }
+    chars.add(str[i]);
+  }
+  return true;
+}
+
+console.log('set version "heya": ', hasUniqueCharactersSet('heya'));
+console.log('set version "hey you": ', hasUniqueCharactersSet('hey you'));
+
+/*
+ * Sort the original string first then iterate through it. Repeat characters
+ * will show up next to eachother so fail if any two characters in a row
+ * are the same.
+ *
+ * Time: O(N log N)
+ * Additional space: O(1)
+ */
+
+function hasUniqueCharactersSort(str) {
+  // solution v2 from CtCI
+  // sort string using quicksort
+  str.sort();
+
+  for (var i = 1; i < str.length; ++i) {
+    if (str[i] === str[i - 1]) {
+      return false;
+    }
+  }
+  return true;
+}
+
+console.log('sort version "heya": ', hasUniqueCharactersSort('heya'));
+console.log('sort version "hey you": ', hasUniqueCharactersSort('hey you'));
+
 //==============================================================================
 
 /*
