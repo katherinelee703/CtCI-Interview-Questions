@@ -136,7 +136,7 @@ D: m[m.length-1-i-j][i]
 
    <7>  8  <9>                D becomes A's value. D is stored at A.
   /           \
- C             D              Now all corners have been swapped. Iterate.
+ D             C              Now all corners have been swapped. Iterate.
 
 
 */
