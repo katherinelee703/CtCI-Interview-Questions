@@ -158,4 +158,6 @@ const tryD = inPlaceRotateMatrix(tryC);
 console.log('rotate in place 4th try: ', tryD);
 // it is now back to the original matrix
 
+// in place version is O(N) linear time since we only touch each item in the matrix ONCE
+// it requires no extra space due to temp variable - O(1) constant space
 //=========================================================================
