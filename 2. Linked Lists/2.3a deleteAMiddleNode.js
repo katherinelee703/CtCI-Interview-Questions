@@ -4,7 +4,7 @@
 
 /*
 
-Question 2.3 - Delete Middle Node:
+Question 2.3 - Delete A Middle Node:
 
 Implement an algorithm to delete a node in the middle (i.e., any node but the first and last node, not necessarily the exact middle) of a singly linked list, given only access to that node.
 
@@ -40,28 +40,28 @@ C(ode):
 
 class SinglyLinkedList {
   constructor() {
-    this.head = this.tail = null;
+    this.head = null;
   }
   // add to end
   append(value) {
     // if list is empty
-    if (!this.tail) {
-      this.head = this.tail = new Node(value);
-    } else {
-      let oldTail = this.tail;
-      this.tail = new Node(value);
-      oldTail.next = this.tail;
+    if (!this.head) {
+      this.head = new Node(value);
     }
+    let eventualTail = this.head;
+    while (eventualTail.next !== null) {
+      eventualTail = eventualTail.next;
+    }
+    eventualTail.next = new Node(value);
   }
   prepend(value) {
     // if list is empty
     if (!this.head) {
-      this.head = this.tail = new Node(value);
-    } else {
-      let oldHead = this.head;
       this.head = new Node(value);
-      this.head.next = oldHead;
     }
+    let oldHead = this.head;
+    this.head = new Node(value);
+    this.head.next = oldHead;
   }
 }
 
@@ -125,4 +125,4 @@ console.log('edited list: ', list);
 // O(ptimize): n/a
 
 // O(N) time where N is the number of elements down the line that node is
-// 0 extra space needed
+// Constant O(1) space
