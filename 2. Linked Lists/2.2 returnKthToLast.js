@@ -1,10 +1,9 @@
 // Chapter 2: Linked Lists
 // Solutions originally solved on repl.it, please see: https://repl.it/@khd25/
 //==============================================================================
-
 /*
 
-Question 2.2 - Return Kth to Last:
+Question 2.2 - Return Kth to Last Element:
 
 Implement an algorithm to find the kth to last element of a singly linked list.
 
@@ -27,7 +26,10 @@ Return this:
 
 A(pproach):
 
-->
+-> let a counter start from 1 and increase each time a node is passed
+-> when counter reaches K, return currentNode
+-> if zero is entered, prompt to enter a number above zero
+-> if number is larger than number of elements in list, prompt no Kth node found and return original list
 
 C(ode):
 
@@ -37,28 +39,29 @@ C(ode):
 
 class SinglyLinkedList {
   constructor() {
-    this.head = this.tail = null;
+    this.head = null;
   }
   // add to end
   append(value) {
     // if list is empty
-    if (!this.tail) {
-      this.head = this.tail = new Node(value);
+    if (!this.head) {
+      return (this.head = new Node(value));
     } else {
-      let oldTail = this.tail;
-      this.tail = new Node(value);
-      oldTail.next = this.tail;
+      let eventualTail = this.head;
+      while (eventualTail.next !== null) {
+        eventualTail = eventualTail.next;
+      }
+      return (eventualTail.next = new Node(value));
     }
   }
   prepend(value) {
     // if list is empty
     if (!this.head) {
-      this.head = this.tail = new Node(value);
-    } else {
-      let oldHead = this.head;
       this.head = new Node(value);
-      this.head.next = oldHead;
     }
+    let oldHead = this.head;
+    this.head = new Node(value);
+    this.head.next = oldHead;
   }
 }
 
@@ -106,10 +109,11 @@ function returnKtoLast(list, k) {
 // console.log("try 5: ", returnKtoLast(list, 3));
 // console.log("try 6: ", returnKtoLast(list, 4));
 // console.log("try 7: ", returnKtoLast(list, 5));
+// console.log("try 8: ", returnKtoLast(list, 8));
 
-console.log('example test case: ', returnKtoLast(list, 4));
+console.log('example test case: ', returnKtoLast(list, 4)); // expecting |5|->|1|->|12|->|3|->NULL
 
-// O(ptimize): see lines 83 - 86
+// O(ptimize): see lines 88 - 91
 
 // O(N) time, where N is the value of k
-// no extra space needed
+// Constant O(1) extra space
