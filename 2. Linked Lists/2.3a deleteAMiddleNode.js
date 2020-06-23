@@ -1,15 +1,14 @@
 // Chapter 2: Linked Lists
 // Solutions originally solved on repl.it, please see: https://repl.it/@khd25/
 //==============================================================================
-
 /*
 
-Question 2.3 - Delete A Middle Node:
+Question 2.3 - Delete Middle Node:
 
 Implement an algorithm to delete a node in the middle (i.e., any node but the first and last node, not necessarily the exact middle) of a singly linked list, given only access to that node.
 
 
-R(ephrase): my version: given a list and any particular node's value, remove it from the SLL as long as it is neither the head nor the tail node. Should mutate the SLL, but does not return anything.
+R(ephrase): given any node, remove it from the SLL as long as it is neither the head nor the tail node. Should edit the SLL, but does not return anything.
 
 E(xamples):
 
@@ -26,12 +25,10 @@ Return null, but edited SLL when printed should now be:
 
 A(pproach):
 
--> The below uncommented version only works when the list does not have repeated element values, and you give the function a node value as the input
--> You still need access to the list/list's variable
+-> The following only works when the list does not have repeated element values, and you give the function a value as the input
+-> Solution fits the problem description but is not very useful - you still need access to the list/list's variable
 -> Theoretically, if you were "given access to just that node" you would just reassign it's value to the value of the next node.
 -> Then set the .next node to be the current node's .next.next
-
-
 C(ode):
 
 */
@@ -46,13 +43,14 @@ class SinglyLinkedList {
   append(value) {
     // if list is empty
     if (!this.head) {
-      this.head = new Node(value);
+      return (this.head = new Node(value));
+    } else {
+      let eventualTail = this.head;
+      while (eventualTail.next !== null) {
+        eventualTail = eventualTail.next;
+      }
+      return (eventualTail.next = new Node(value));
     }
-    let eventualTail = this.head;
-    while (eventualTail.next !== null) {
-      eventualTail = eventualTail.next;
-    }
-    eventualTail.next = new Node(value);
   }
   prepend(value) {
     // if list is empty
@@ -72,6 +70,32 @@ class Node {
   }
 }
 
+function deleteMiddleNode(list, targetNodeVal) {
+  let currentNode = list.head;
+  if (currentNode.value === targetNodeVal) {
+    return 'HEAD is an invalid node';
+  }
+  while (currentNode) {
+    if (currentNode.value === targetNodeVal && currentNode.next !== null) {
+      let oldCurrent = currentNode;
+      currentNode.value = oldCurrent.next.value;
+      currentNode.next = oldCurrent.next.next;
+      console.log('list successfully edited: ');
+      return list;
+    } else {
+      if (currentNode.next === null) {
+        return 'TAIL is an invalid node';
+      }
+      currentNode = currentNode.next;
+    }
+  }
+
+  console.log('list not edited, node not found, see original list: ');
+  return list;
+}
+
+// T(est):
+
 let list = new SinglyLinkedList();
 
 list.append('A');
@@ -80,49 +104,14 @@ list.append('C');
 list.append('D');
 list.append('E');
 
-// * * * A Simpler Solution assuming you somehow got direct access to an actual Node and don't need to input the list into the function:
-
-function removeMiddleNode(node) {
-  if (!node || !node.next) {
-    return 'invalid node';
-  }
-  node.value = node.next.value;
-  node.next = node.next.next;
-  return;
-}
-
-// my version, testable on repl.it :
-
-function deleteMiddleNode(list, nodeVal) {
-  let currentNode = list.head;
-  if (!nodeVal || nodeVal === list.head.value || nodeVal === list.tail.value) {
-    return 'invalid node';
-  } else {
-    while (currentNode) {
-      if (currentNode.value === nodeVal) {
-        let oldCurrent = currentNode;
-        currentNode.value = oldCurrent.next.value;
-        currentNode.next = oldCurrent.next.next;
-        console.log('list successfully edited');
-        return;
-      } else {
-        currentNode = currentNode.next;
-      }
-    }
-  }
-  console.log('list not edited, node not found');
-  return;
-}
-
-// T(est):
-
-console.log('original list: ', list);
+// console.log("original list: ", list);
 console.log(deleteMiddleNode(list, 'B'));
 console.log(deleteMiddleNode(list, 'A'));
 console.log(deleteMiddleNode(list, 'E'));
-console.log('edited list: ', list);
+console.log(deleteMiddleNode(list, 'C'));
+// console.log("edited list: ", list);
 
 // O(ptimize): n/a
 
-// O(N) time where N is the number of elements down the line that node is
+// O(N) time where N is the number of elements down the list that node is
 // Constant O(1) space
