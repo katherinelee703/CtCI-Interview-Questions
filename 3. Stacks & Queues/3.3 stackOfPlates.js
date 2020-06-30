@@ -62,10 +62,6 @@ SetOfStacks.prototype.pop = function () {
       return removed;
     }
   }
-
-  // read to end of stacks that are filled,
-  // get last item in last element, edit array to take it out
-  // return that old last element
 };
 
 SetOfStacks.prototype.popAt = function (stackNum) {
