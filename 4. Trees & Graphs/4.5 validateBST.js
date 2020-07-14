@@ -9,9 +9,37 @@ Question 4.5 - Validate BST:
 Implement a function to check if a binary tree is a binary search tree.
 Hints: #35, #57, #86, # 113, # 128
 
-R(ephrase):
-E(xample):
+R(ephrase): are all nodes on left half of tree/subtrees smaller than the root of the tree, are all on right larger?
+E(xample): 
+        |10|
+       /   \
+     /       \
+   |2|       |20|
+  /   \     /   \
+|1|   |3| |12|   |24|
+			 \    \
+			 |5|  |15|
+
 A(pproach):
+
+- to validate we must check every single node to be sure it follows the rules of a BST
+- will use a helper function that 
+	- tracks a min and max to use as comparison values 
+	- can be called recursively until we get to the bottom of the tree
+- when helper's node is null (!node) it means we got to the bottom of the tree without breaking the BST rules
+- the other case is if the node we are on is less than the running min or more than the running max, then return false
+- if we didn't hit either of those cases, we make 2 recursive calls to the helper function using node.left and node.right
+	- for the left recursive search, each time we should lower the max to be 1 below the current node's value
+	- for the right recursive search, heighten the running min to be 1 above the current node's value
+
+- main validateBST function will just call the helper function
+	- on the node given (the root node)
+	- and will set an initial min as -Infinity to cover a very large potential tree
+	- and will set an initial max as Infinity to cover a very large potential tree
+- returns the boolean value that the helper function returns
+
+* see notes within the code
+
 C(ode):
 
 */
