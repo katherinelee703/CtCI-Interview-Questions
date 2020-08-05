@@ -4,7 +4,7 @@
 
 /*
 
-Question 4.12 - Paths With Sum:
+Question 4.12b - Paths With Sum II:
 
 You are given a binary tree in which each node contains an integer value (which
 might be positive or negative). Design an algorithm to count the number of paths that sum to a
